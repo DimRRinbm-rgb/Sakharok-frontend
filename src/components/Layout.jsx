@@ -11,14 +11,13 @@ function getToday() {
   return text[0].toUpperCase() + text.slice(1);
 }
 
-// Пункты меню (icon — название иконки из Icon.jsx)
+// Пункты меню (убрали "О проекте" из списка)
 const links = [
   { to: "/", icon: "home", text: "Главная" },
   { to: "/diary", icon: "diary", text: "Дневник" },
   { to: "/medications", icon: "pill", text: "Лекарства" },
   { to: "/appointments", icon: "doctor", text: "Врачи" },
   { to: "/profile", icon: "profile", text: "Профиль" },
-  { to: "/about", icon: "info", text: "О проекте" },
 ];
 
 // NavLink сам добавляет класс "active" активной ссылке
@@ -47,19 +46,27 @@ export default function Layout() {
     <div className="app">
       {/* Меню слева (компьютер) */}
       <aside className="sidebar">
-        <img className="logo" src="/logo.png" alt="СахарОК" />
+        {/* Клик по верхнему логотипу ведет на "О проекте" */}
+        <Link to="/about" title="О проекте" style={{ display: "inline-block" }}>
+          <img className="logo" src="/logo.png" alt="СахарОК" />
+        </Link>
+
         <Menu />
-        <div className="sidebar-bottom">
-          <img className="mascot-img mascot-md" src="/mascot.png" alt="" />
+
+        {/* Блок с персонажем снизу сайдбара тоже ведет на "О проекте" */}
+        <Link to="/about" className="sidebar-bottom" style={{ textDecoration: "none", color: "inherit" }}>
+          <img className="mascot-img mascot-md" src="/sugar_normal.png" alt="Сахарок" />
           <b>СахарОК</b>
           <span className="gray">Ваш дневник самоконтроля</span>
-        </div>
+        </Link>
       </aside>
 
       <main className="main">
         {/* Шапка на телефоне */}
         <div className="mobile-header">
-          <img src="/logo.png" alt="СахарОК" />
+          <Link to="/about" title="О проекте">
+            <img src="/logo.png" alt="СахарОК" />
+          </Link>
           <Link to="/profile" className="profile-btn">
             {user ? firstName[0] : <Icon name="profile" />}
           </Link>
