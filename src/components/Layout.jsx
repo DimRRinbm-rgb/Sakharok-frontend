@@ -1,6 +1,6 @@
 import { NavLink, Outlet, Link } from "react-router-dom";
 
-// Дата для шапки: "Среда, 7 октября"
+// Дата для шапки
 function getToday() {
   const text = new Date().toLocaleDateString("ru-RU", {
     weekday: "long",
@@ -10,7 +10,7 @@ function getToday() {
   return text[0].toUpperCase() + text.slice(1);
 }
 
-// Пункты меню (одни и те же для компьютера и телефона)
+// Пункты меню 
 const links = [
   { to: "/", icon: "🏠", text: "Главная" },
   { to: "/diary", icon: "📖", text: "Дневник" },
