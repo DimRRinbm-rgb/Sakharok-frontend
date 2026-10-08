@@ -124,3 +124,95 @@ export async function deleteMeasurement(id) {
   checkLogin(response);
   if (!response.ok) throw new Error("Не удалось удалить запись");
 }
+
+// ---------- Лекарства ----------
+
+// Список лекарств
+export async function getMedications() {
+  const response = await fetch(API_URL + "/medications", { headers: authHeaders() });
+  checkLogin(response);
+  if (!response.ok) throw new Error("Не удалось загрузить лекарства");
+  return await response.json();
+}
+
+// Добавить лекарство: { name, doses, time }
+export async function createMedication(data) {
+  const response = await fetch(API_URL + "/medications", {
+    method: "POST",
+    headers: authHeaders(),
+    body: JSON.stringify(data),
+  });
+  checkLogin(response);
+  const result = await response.json();
+  if (!response.ok) throw new Error(result.error);
+  return result;
+}
+
+// Изменить лекарство
+export async function updateMedication(id, data) {
+  const response = await fetch(API_URL + "/medications/" + id, {
+    method: "PUT",
+    headers: authHeaders(),
+    body: JSON.stringify(data),
+  });
+  checkLogin(response);
+  const result = await response.json();
+  if (!response.ok) throw new Error(result.error);
+  return result;
+}
+
+// Удалить лекарство
+export async function deleteMedication(id) {
+  const response = await fetch(API_URL + "/medications/" + id, {
+    method: "DELETE",
+    headers: authHeaders(),
+  });
+  checkLogin(response);
+  if (!response.ok) throw new Error("Не удалось удалить лекарство");
+}
+
+// ---------- Записи к врачу ----------
+
+// Список записей
+export async function getAppointments() {
+  const response = await fetch(API_URL + "/appointments", { headers: authHeaders() });
+  checkLogin(response);
+  if (!response.ok) throw new Error("Не удалось загрузить записи");
+  return await response.json();
+}
+
+// Добавить запись: { doctor, date, time, place, note }
+export async function createAppointment(data) {
+  const response = await fetch(API_URL + "/appointments", {
+    method: "POST",
+    headers: authHeaders(),
+    body: JSON.stringify(data),
+  });
+  checkLogin(response);
+  const result = await response.json();
+  if (!response.ok) throw new Error(result.error);
+  return result;
+}
+
+// Изменить запись
+export async function updateAppointment(id, data) {
+  const response = await fetch(API_URL + "/appointments/" + id, {
+    method: "PUT",
+    headers: authHeaders(),
+    body: JSON.stringify(data),
+  });
+  checkLogin(response);
+  const result = await response.json();
+  if (!response.ok) throw new Error(result.error);
+  return result;
+}
+
+// Удалить запись
+export async function deleteAppointment(id) {
+  const response = await fetch(API_URL + "/appointments/" + id, {
+    method: "DELETE",
+    headers: authHeaders(),
+  });
+  checkLogin(response);
+  if (!response.ok) throw new Error("Не удалось удалить запись");
+}

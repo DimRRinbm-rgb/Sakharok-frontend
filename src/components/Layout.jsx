@@ -1,4 +1,5 @@
 import { NavLink, Outlet, Link } from "react-router-dom";
+import Icon from "./Icon";
 
 // Дата для шапки
 function getToday() {
@@ -10,18 +11,22 @@ function getToday() {
   return text[0].toUpperCase() + text.slice(1);
 }
 
-// Пункты меню 
+// Пункты меню (icon — название иконки из Icon.jsx)
 const links = [
-  { to: "/", icon: "🏠", text: "Главная" },
-  { to: "/diary", icon: "📖", text: "Дневник" },
-  { to: "/profile", icon: "👤", text: "Профиль" },
+  { to: "/", icon: "home", text: "Главная" },
+  { to: "/diary", icon: "diary", text: "Дневник" },
+  { to: "/medications", icon: "pill", text: "Лекарства" },
+  { to: "/appointments", icon: "doctor", text: "Врачи" },
+  { to: "/profile", icon: "profile", text: "Профиль" },
+  { to: "/about", icon: "info", text: "О проекте" },
 ];
 
 // NavLink сам добавляет класс "active" активной ссылке
 function Menu() {
   return links.map((item) => (
     <NavLink key={item.to} to={item.to} end className="nav-link">
-      {item.icon} <span>{item.text}</span>
+      <Icon name={item.icon} />
+      <span>{item.text}</span>
     </NavLink>
   ));
 }
@@ -56,7 +61,7 @@ export default function Layout() {
         <div className="mobile-header">
           <img src="/logo.png" alt="СахарОК" />
           <Link to="/profile" className="profile-btn">
-            {user ? firstName[0] : "👤"}
+            {user ? firstName[0] : <Icon name="profile" />}
           </Link>
         </div>
 

@@ -95,16 +95,20 @@ export default function Home() {
   const forChart = [...week].reverse();
   const recent = week.slice(0, 3); // три последние записи
 
-  // Статус последнего значения
+  // Статус последнего значения и динамический выбор иконки Сахарка
   let statusText = "В вашем диапазоне";
   let statusClass = "status good";
+  let mascotSrc = "/sugar_normal.png";
+
   if (latest && latest.glucose < MIN_NORM) {
     statusText = "Ниже нормы";
     statusClass = "status bad";
+    mascotSrc = "/sugar_low.png";
   }
   if (latest && latest.glucose > MAX_NORM) {
     statusText = "Выше нормы";
     statusClass = "status bad";
+    mascotSrc = "/sugar_high.png";
   }
 
   return (
@@ -133,7 +137,7 @@ export default function Home() {
                 <p className="gray">Записей пока нет. Добавьте первое измерение!</p>
               </div>
             )}
-            <img className="mascot-img mascot-md" src="/mascot.png" alt="" />
+            <img className="mascot-img mascot-md" src={mascotSrc} alt="Сахарок" />
           </div>
 
           {/* Эта кнопка видна только на телефоне */}

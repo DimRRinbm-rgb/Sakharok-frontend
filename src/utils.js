@@ -69,3 +69,51 @@ export function diabetesText(value) {
   const found = DIABETES_TYPES.find((item) => item.value === value);
   return found ? found.text : "Не указан";
 }
+
+// ---------- Google Календарь ----------
+
+// Число с нулём впереди: 5 -> "05"
+function pad(number) {
+  return String(number).padStart(2, "0");
+}
+
+// Дата и время для ссылки календаря: "20261008T083000"
+function toCalendarDate(date) {
+  return (
+    date.getFullYear() +
+    pad(date.getMonth() + 1) +
+    pad(date.getDate()) +
+    "T" +
+    pad(date.getHours()) +
+    pad(date.getMinutes()) +
+    "00"
+  );
+}
+
+// Ссылка, которая открывает Google Календарь с уже заполненным событием.
+// date: "2026-10-08", time: "08:30", minutes: сколько длится событие,
+// repeatDaily: true — повторять каждый день (для лекарств)
+export function makeCalendarLink(title, date, time, minutes, details, repeatDaily) {
+  const start = new Date(date + "T" + time.slice(0, 5) + ":00");
+  const end = new Date(start.getTime() + minutes * 60000);
+
+  let link = "https://calendar.google.com/calendar/render?action=TEMPLATE";
+  link = link + "&text=" + encodeURIComponent(title);
+  link = link + "&dates=" + toCalendarDate(start) + "/" + toCalendarDate(end);
+  link = link + "&details=" + encodeURIComponent(details);
+  if (repeatDaily) {
+    link = link + "&recur=" + encodeURIComponent("RRULE:FREQ=DAILY");
+  }
+  return link;
+}
+
+// 1 -> "1 доза", 2 -> "2 дозы", 5 -> "5 доз"
+export function dosesText(count) {
+  const n = Number(count);
+  const last = n % 10;
+  const lastTwo = n % 100;
+
+  if (last === 1 && lastTwo !== 11) return n + " доза";
+  if (last >= 2 && last <= 4 && (lastTwo < 12 || lastTwo > 14)) return n + " дозы";
+  return n + " доз";
+}

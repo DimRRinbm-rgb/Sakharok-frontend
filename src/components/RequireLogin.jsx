@@ -1,6 +1,6 @@
 import { Outlet, Link } from "react-router-dom";
 
-// Обёртка
+// Эта обёртка стоит над страницами, которые нужны только вошедшим.
 // Нет «пропуска» (token) — показываем приглашение войти.
 // Есть — показываем саму страницу (<Outlet />).
 export default function RequireLogin() {
